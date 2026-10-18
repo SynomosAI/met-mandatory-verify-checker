@@ -1,0 +1,21 @@
+# met-mandatory-verify-checker
+
+> SynomosAI 域 Profile：计量强制检定与计量器具周期合规核验。声明式四件套骨架（domain/1.0），状态 RESERVED 待认领。核验器（MCP 工具）只出示出处链，不下合格结论。
+
+`met-mandatory-verify-checker` 把「这块表要不要强检、检了没有、还有效吗」拆成可核验属性：AI 只做状态提示，不做合格结论。强制检定工作计量器具须周期检定，超期使用在贸易结算、安全防护、医疗卫生、环境监测四类场景后果直接；合格与否以检定证书为唯一依据。
+
+## 核心
+
+- [domain.manifest.json](https://github.com/SynomosAI/met-mandatory-verify-checker/blob/main/domain.manifest.json): 域声明（属性清单 / 签发方要求 / 红线 / 有效期）
+- [gate-map.json](https://github.com/SynomosAI/met-mandatory-verify-checker/blob/main/gate-map.json): 动作摩擦五级表（silent/warn/confirm/block/require-owner）
+- [privacy.json](https://github.com/SynomosAI/met-mandatory-verify-checker/blob/main/privacy.json): 隐私声明（准入条件）
+- [checker.io.json](https://github.com/SynomosAI/met-mandatory-verify-checker/blob/main/checker.io.json): MCP 核验器输入输出契约
+- [README.md](https://github.com/SynomosAI/met-mandatory-verify-checker/blob/main/README.md): 项目说明与快速开始
+
+## 可选
+
+- [AGENTS.md](https://github.com/SynomosAI/met-mandatory-verify-checker/blob/main/AGENTS.md): 给 AI Agent 的工作指引
+- [llms-full.txt](https://github.com/SynomosAI/met-mandatory-verify-checker/blob/main/llms-full.txt): 完整文本
+- [SECURITY.md](https://github.com/SynomosAI/met-mandatory-verify-checker/blob/main/SECURITY.md): 安全策略
+- [LICENSE](https://github.com/SynomosAI/met-mandatory-verify-checker/blob/main/LICENSE): 代码与配置 MIT
+- [LICENSE-CONTENT](https://github.com/SynomosAI/met-mandatory-verify-checker/blob/main/LICENSE-CONTENT): 文档知识版权 ARR（可注明出处引用）

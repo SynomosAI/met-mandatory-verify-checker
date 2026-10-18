@@ -1,9 +1,17 @@
 # met-mandatory-verify-checker
 
+[![License: MIT](https://img.shields.io/badge/Code%20License-MIT-yellow.svg)](LICENSE)
+[![Content: ARR](https://img.shields.io/badge/Content%20License-ARR%20%7C%20citable-blue.svg)](LICENSE-CONTENT)
+[![Status: RESERVED](https://img.shields.io/badge/status-RESERVED%20%E2%80%94%20open%20for%20claim-orange.svg)](#认领方式)
+[![Domain: met](https://img.shields.io/badge/domain-met-2ea44f.svg)](domain.manifest.json)
+[![MCP Checker](https://img.shields.io/badge/checker-MCP%20tool-8a2be2.svg)](checker.io.json)
+
 > **状态：RESERVED（占位 · 开放认领）** — 本仓已按平台协议规范建好行业接入四件套骨架，
 > 等待具备本域资质的运营方认领并填充真实规则。
 
 把「这块表要不要强检、检了没有、还有效吗」拆成可核验的属性，让 AI 只做状态提示，不做合格结论。
+
+**English:** This repository is the SynomosAI *domain profile* for mandatory metrological verification of measuring instruments. It is a declarative, machine-readable skeleton (manifest / gate-map / privacy / checker contract) — not a runnable product. The embedded checker MCP tool only **shows and verifies provenance** (who issued the certificate, whether it is in date, where the evidence is); it never outputs "pass / fail / safe-to-use" conclusions.
 
 ## 这个域管什么
 
@@ -57,6 +65,53 @@
 **隐私是准入条件，不是整改事项。** 缺失 `privacy.json` 或任一必填字段不符，
 符合性校验直接失败——不是警告，是拒绝接入。
 
+## 🚀 快速开始 / Quick Start
+
+> 本仓为声明式域骨架，**无需安装、无需运行时**；认领方填注 `operator` 与 `checker_endpoint` 后才接入平台校验器。
+
+```bash
+# 1. 克隆本仓
+git clone https://github.com/SynomosAI/met-mandatory-verify-checker.git
+cd met-mandatory-verify-checker
+
+# 2. 通读四件套（纯声明文件，无依赖）
+cat domain.manifest.json   # 属性清单 / 签发方要求 / 红线 / 有效期
+cat gate-map.json          # 动作摩擦五级：silent/warn/confirm/block/require-owner
+cat privacy.json           # 隐私声明（缺失或字段不符 → 校验直接失败）
+cat checker.io.json        # MCP 核验器输入输出契约
+```
+
+核验器（认领方实现后）的一次典型输入，见 `checker.io.json` 的示例：
+
+```json
+{
+  "subject_ref": "mpp:cn:9f2c1a7b",
+  "attribute_keys": ["met.instrument_category", "met.verification_status"],
+  "evidence": ["tsa:2026-09-12#sha256:3b1f..."],
+  "request_id": "req-20260912-0001"
+}
+```
+
+返回结果只会是 `shown / missing / expired / unverifiable` 四态之一，**绝无**「计量合格 / 可继续使用 / 已合规」类结论（见 `checker.io.json` 的 `_forbidden_outputs`）。
+
+## 📁 仓库结构 / Repository layout
+
+```text
+met-mandatory-verify-checker/
+├── domain.manifest.json   # 域声明：属性 / 签发方要求 / 红线 / 有效期（domain/1.0）
+├── gate-map.json          # 动作摩擦五级表（gate/1.0），每条红线必须有对应规则
+├── privacy.json           # 隐私声明（privacy/1.0），准入条件
+├── checker.io.json        # MCP 核验器输入输出契约（只出示核验，不下判定）
+├── CODEOWNERS             # @SynomosAI/synomosai-gov
+├── LICENSE                # 代码与配置：MIT
+├── LICENSE-CONTENT        # 文档知识版权：All Rights Reserved（可注明出处引用）
+├── SECURITY.md            # 安全策略
+├── AGENTS.md              # 给 AI Agent 的工作指引
+├── llms.txt               # 给 AI 的最小索引
+├── llms-full.txt          # 给 AI 的完整文本
+└── README.en.md           # English README
+```
+
 ## 参考依据
 
 - 中华人民共和国计量法
@@ -81,3 +136,5 @@
 代码与配置按 MIT 许可使用。文档的知识版权归 SynomosAI 所有。
 
 © 2026 SynomosAI. All rights reserved.
+
+完整条款：代码与配置见 [LICENSE](LICENSE)（MIT）；文档知识版权见 [LICENSE-CONTENT](LICENSE-CONTENT)（All Rights Reserved，学术/新闻/评估引用请注明出处与条目）。安全问题请私下联系 [SECURITY.md](SECURITY.md)。
